@@ -258,3 +258,12 @@ async def calculate_savings(request: SavingsRequest):
         "savings_3_years": savings_3_years,  # Incluimos el ahorro a 3 años
         "savings_15_years": savings_15_years  # Incluimos el ahorro a 15 años
     }
+
+# Para la conexión
+import os
+import uvicorn
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
+
