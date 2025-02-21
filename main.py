@@ -4,6 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import Optional
 import spacy
+import uvicorn
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -259,11 +260,18 @@ async def calculate_savings(request: SavingsRequest):
         "savings_15_years": savings_15_years  # Incluimos el ahorro a 15 años
     }
 
-# Para la conexión
+# Para la conexión con Render
 import os
-import uvicorn
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"mensaje": "¡Hola desde FastAPI en Render!"}
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8000))
+    import uvicorn
+    port = int(os.environ.get("PORT", 8000))  # Render define el puerto automáticamente
     uvicorn.run(app, host="0.0.0.0", port=port)
 
